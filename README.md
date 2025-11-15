@@ -41,7 +41,7 @@ Endpoint:
 GET /ask?question=Your+Question+Here
 
 Example:
-GET http://localhost:8000/ask?question=When is Fatima planning her trip to London?
+GET `http://localhost:8000/ask?question=When%20is%20Fatima%20planning%20her%20trip%20to%20London%3F`
 
 Sample Response:
 
