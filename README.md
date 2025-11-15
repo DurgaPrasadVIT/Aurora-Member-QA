@@ -138,4 +138,33 @@ This system offers:
 The project is focused, predictable, and aligned with the take-home assignment requirements.
 
 
+## 11. Live API Endpoint & Examples Links
+
+Base URL:
+https://aurora-member-qa-i99g.onrender.com/ask?question=
+
+
+Direct Test Samples:
+
+• Fatima travel example
+
+https://aurora-member-qa-i99g.onrender.com/ask?question=When+is+Fatima+planning+her+trip+to+London%3F
+
+• Yoga trainer example
+
+https://aurora-member-qa-i99g.onrender.com/ask?question=Who+needs+a+Yoga+trainer+in+Dubai%3F
+
+• Antiques dealer example
+
+https://aurora-member-qa-i99g.onrender.com/ask?question=Who+is+looking+for+an+antiques+dealer%3F
+
+• Business networking example
+
+https://aurora-member-qa-i99g.onrender.com/ask?question=Who+is+looking+to+connect+with+other+founders%3F
+
+Sample Response:
+
+{
+  "answer": "Member: Fatima El-Tahir | Timestamp: 2025-03-27T06:01:58Z | Message: Looking to connect with a reputable antiques dealer in London."
+}
 
