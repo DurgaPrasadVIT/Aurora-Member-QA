@@ -3,39 +3,77 @@
 
 ## 1. Overview 
 
-This document describes a lightweight question answering service built on top of Aurora’s public member messages API. The system receives a natural-language question, searches all available
-member messages, and returns the best matching entry in a clean JSON response. The design is intentionally simple, predictable, and transparent, aligning with Aurora’s assignment expectations.
+This project is a simple question answering service built on top of Aurora’s public member messages API. The system takes a natural language question, searches the member messages, and returns the closest match in a clean JSON response. The goal is to keep the design easy to follow, reliable, and simple to maintain.
+
+## 2. Tech Stack
+
+Python
+
+FastAPI
+
+Sentence Transformers
+
+Embedding based similarity search
+
+In memory vector index
+
+Uvicorn
+
+Render for deployment
 
 
-## 2. Project Structure
+## 3. Project Structure
 
-The system follows a minimal modular structure:
+main.py contains the FastAPI application and exposes the /ask endpoint
 
-• main.py – Hosts the FastAPI application and exposes the `/ask` endpoint.
+qa.py handles embeddings and vector search
 
-• qa.py – Handles embeddings, vector comparison, and message retrieval. 
+services/messages.py fetches member messages from Aurora’s API
 
-• services/messages.py – Fetches public member messages from Aurora’s API. 
+extractors/extractors.py cleans and normalizes message text
 
-• extractors/extractors.py – Normalizes and cleans message text. 
+requirements.txt lists all dependencies
 
-All dependencies are listed in requirements.txt. The system operates entirely in memory for
-speed and simplicity.
+The system runs entirely in memory which keeps it fast and easy to deploy.
+
+## 4. Architecture
+
+Aurora API  
+    ↓
+Message Fetcher  
+    ↓
+Extractor for text cleaning  
+    ↓
+Embedding Model  
+    ↓
+In Memory Index  
+    ↑
+User Question through FastAPI /ask  
+    ↓
+Similarity Search  
+    ↓
+Best Match Returned as JSON
 
 
-## 3. How the System Works
+## 5. How the System Works
 
-1. The service downloads all public member messages from Aurora’s API.
-2. Text is cleaned and standardized.
-3. Each message is converted into an embedding vector.
-4. A user asks a question via the `/ask` endpoint.
-5. The question is embedded and compared to all stored vectors.
-6. The closest match is returned as JSON.
-If no meaningful match exists, the response is:
+The service downloads all public member messages from Aurora’s API.
+
+Text is cleaned and normalized.
+
+Each message is converted into an embedding vector.
+
+The user sends a question to the /ask endpoint.
+
+The question is embedded and compared to all message vectors.
+
+The closest match is returned as JSON.
+
+If nothing is relevant, the response is:
 “The information is not available in the member messages.”
 
 
-## 4. API Specification
+## 6. API Specification
 
 Endpoint:
 GET /ask?question=Your+Question+Here
@@ -52,7 +90,7 @@ Sample Response:
 
 
 
-## 5. Running Locally
+## 7. Running Locally
 
 Install dependencies:
 `pip install -r requirements.txt`
@@ -63,86 +101,51 @@ Start the service:
 Swagger UI:
 `http://127.0.0.1:8000/docs`
 
+## 8. Performance Notes
 
-## 6. Design Decisions
+The system handles a few thousand messages in memory without any issues.
 
+Typical response times stay under half a second on Render.
 
-• Embeddings: Provide flexible matching for differently worded questions.
-
-• FastAPI: Offers clean routing and automatic documentation.
-
-• In memory index: Ideal for small datasets, avoids infrastructure overhead.
-
-• Alternate approaches considered: TF-IDF, lightweight RAG, rule based matching.
-
-Embeddings demonstrated the best balance of accuracy, simplicity, and maintainability.
+A compact embedding model is used for fast processing.
 
 
+## 9. Design Decisions
 
-## 7. Data Notes
+Embeddings provide better matching accuracy for natural language questions.
 
-During analysis of the public dataset:
+FastAPI keeps the routing clean and adds automatic documentation.
 
-• Some names are similar and require clean normalization.
+An in memory index avoids extra infrastructure.
 
-• Message length varies.
-
-• A few timestamps and structures differ slightly.
-
-• Normalization ensures consistent embedding quality.
-
-All processed messages go through the extractor before storage.
+TF IDF and keyword based scoring were considered but did not perform as well for open ended questions.
 
 
 
-## 8. Deployment-Ready Design
+## 10. Future Enhancements
 
-This service can be deployed to:
+Add caching to avoid fetching data repeatedly.
 
-• Render
+Move embeddings into a vector database such as FAISS for larger datasets.
 
-• Railway
+Add hybrid scoring that blends embeddings and keywords.
 
-• Fly.io
+Add logging and monitoring for production use.
 
-• AWS Lightsail
-
-After deployment, the public URL can replace the local endpoint in the README.
+Introduce batch endpoints for multiple questions.
 
 
 
-## 9. Future Enhancements
+## 11. Deployment
 
-• Add caching to avoid refetching data.
-
-• Move embeddings into a vector DB like FAISS for scalability.
-
-• Improve ranking using hybrid search (embeddings + keyword scoring).
-
-• Add structured logging for debugging and monitoring.
+This service can run on platforms such as Render, Railway, Fly.io, and AWS Lightsail.
+The current live deployment is available below.
 
 
-
-## 10. Summary
-
-This system offers:
-
-• A clear and reliable /ask interface
-
-• A simple architecture that Aurora reviewers can understand quickly
-
-• Clean embeddings-based matching
-
-• A maintainable foundation ready for scaling
-
-The project is focused, predictable, and aligned with the take-home assignment requirements.
-
-
-## 11. Live API Endpoint & Examples Links
+## 11. Live API Endpoint 
 
 Base URL:
 https://aurora-member-qa-i99g.onrender.com/ask?question=
-
 
 Direct Test Samples:
 
