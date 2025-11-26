@@ -21,6 +21,8 @@ Uvicorn
 
 Render for deployment
 
+The setup stays intentionally lightweight to keep the code easy to understand and run without extra infrastructure.
+
 
 ## 3. Project Structure
 
@@ -40,18 +42,25 @@ The system runs entirely in memory which keeps it fast and easy to deploy.
 
 Aurora API  
     ↓
+    
 Message Fetcher  
     ↓
+    
 Extractor for text cleaning  
     ↓
+    
 Embedding Model  
     ↓
+    
 In Memory Index  
     ↑
+    
 User Question through FastAPI /ask  
     ↓
+    
 Similarity Search  
     ↓
+    
 Best Match Returned as JSON
 
 
@@ -135,14 +144,18 @@ Add logging and monitoring for production use.
 Introduce batch endpoints for multiple questions.
 
 
+## 11. Limitations
 
-## 11. Deployment
+The system is designed for small to medium datasets and works best with short messages. It does not handle very large collections of documents, and it does not use hybrid retrieval or a vector database at this stage. It is built for clarity and ease of review rather than full scale production.
+
+
+## 12. Deployment
 
 This service can run on platforms such as Render, Railway, Fly.io, and AWS Lightsail.
 The current live deployment is available below.
 
 
-## 11. Live API Endpoint 
+## 13. Live API Endpoint 
 
 Base URL:
 https://aurora-member-qa-i99g.onrender.com/ask?question=
