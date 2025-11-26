@@ -7,34 +7,34 @@ This project is a simple question answering service built on top of Aurora’s p
 
 ## 2. Tech Stack
 
-. Python
+- Python
 
-. FastAPI
+- FastAPI
 
-. Sentence Transformers
+- Sentence Transformers
 
-. Embedding based similarity search
+- Embedding based similarity search
 
-. In memory vector index
+- In memory vector index
 
-. Uvicorn
+- Uvicorn
 
-. Render for deployment
+- Render for deployment
 
 The setup stays intentionally lightweight to keep the code easy to understand and run without extra infrastructure.
 
 
 ## 3. Project Structure
 
-. main.py contains the FastAPI application and exposes the /ask endpoint
+- main.py contains the FastAPI application and exposes the /ask endpoint
 
-. qa.py handles embeddings and vector search
+- qa.py handles embeddings and vector search
 
-. services/messages.py fetches member messages from Aurora’s API
+- services/messages.py fetches member messages from Aurora’s API
 
-. extractors/extractors.py cleans and normalizes message text
+- extractors/extractors.py cleans and normalizes message text
 
-. requirements.txt lists all dependencies
+- requirements.txt lists all dependencies
 
 The system runs entirely in memory which keeps it fast and easy to deploy.
 
@@ -66,20 +66,19 @@ Best Match Returned as JSON
 
 ## 5. How the System Works
 
-. The service downloads all public member messages from Aurora’s API.
+- The service downloads all public member messages from Aurora’s API.
 
-. Text is cleaned and normalized.
+- Text is cleaned and normalized.
 
-. Each message is converted into an embedding vector.
+- Each message is converted into an embedding vector.
 
-. The user sends a question to the /ask endpoint.
+- The user sends a question to the /ask endpoint.
 
-. The question is embedded and compared to all message vectors.
+- The question is embedded and compared to all message vectors.
 
-. The closest match is returned as JSON.
+- The closest match is returned as JSON.
 
-. If nothing is relevant, the response is:
-
+- If nothing is relevant, the response is:
 “The information is not available in the member messages.”
 
 
@@ -113,36 +112,36 @@ Swagger UI:
 
 ## 8. Performance Notes
 
-. The system handles a few thousand messages in memory without any issues.
+- The system handles a few thousand messages in memory without any issues.
 
-. Typical response times stay under half a second on Render.
+- Typical response times stay under half a second on Render.
 
-. A compact embedding model is used for fast processing.
+- A compact embedding model is used for fast processing.
 
 
 ## 9. Design Decisions
 
-. Embeddings provide better matching accuracy for natural language questions.
+- Embeddings provide better matching accuracy for natural language questions.
 
-. FastAPI keeps the routing clean and adds automatic documentation.
+- FastAPI keeps the routing clean and adds automatic documentation.
 
-. An in memory index avoids extra infrastructure.
+- An in memory index avoids extra infrastructure.
 
-. TF IDF and keyword based scoring were considered but did not perform as well for open ended questions.
+- TF IDF and keyword based scoring were considered but did not perform as well for open ended questions.
 
 
 
 ## 10. Future Enhancements
 
-. Add caching to avoid fetching data repeatedly.
+- Add caching to avoid fetching data repeatedly.
 
-. Move embeddings into a vector database such as FAISS for larger datasets.
+- Move embeddings into a vector database such as FAISS for larger datasets.
 
-. Add hybrid scoring that blends embeddings and keywords.
+- Add hybrid scoring that blends embeddings and keywords.
 
-. Add logging and monitoring for production use.
+- Add logging and monitoring for production use.
 
-. Introduce batch endpoints for multiple questions.
+- Introduce batch endpoints for multiple questions.
 
 
 ## 11. Limitations
